@@ -93,6 +93,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0-nullsafety.3"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0-nullsafety.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -154,6 +161,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0-nullsafety.5"
+  yaw_phonenumber_platform_interface:
+    dependency: "direct main"
+    description:
+      path: yaw_phonenumber_platform_interface
+      ref: HEAD
+      resolved-ref: "269a08048b923ec6a985e13dfba5402ae6867897"
+      url: "https://github.com/illabo/yaw_phonenumber.git"
+    source: git
+    version: "0.0.1"
 sdks:
   dart: ">=2.12.0-0.0 <3.0.0"
-  flutter: ">=1.20.0"
+  flutter: ">=1.22.0"

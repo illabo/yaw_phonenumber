@@ -86,14 +86,14 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _getFormattedNumber(String phone) async {
-    _formattedNumber = await YawPhonenumber.formatIncomplete(phone);
+    _formattedNumber = await formatIncomplete(phone);
   }
 
   Future<void> _isValidNumber(String phone) async {
-    _isValid = await YawPhonenumber.isValidNumber(phone);
+    _isValid = await isValidNumber(phone);
   }
 
   Future<void> _isIntlDialable(String phone) async {
-    _isIntDial = await YawPhonenumber.isInternationallyDialable(phone);
+    _isIntDial = await isInternationallyDialable(phone);
   }
 }

@@ -400,7 +400,7 @@ packages:
     description:
       path: yaw_phonenumber_platform_interface
       ref: HEAD
-      resolved-ref: f6e6858e8a9cf80afd79a3327905b07b5390fecb
+      resolved-ref: "269a08048b923ec6a985e13dfba5402ae6867897"
       url: "https://github.com/illabo/yaw_phonenumber.git"
     source: git
     version: "0.0.1"
