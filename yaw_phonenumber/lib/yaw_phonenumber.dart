@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:yaw_phonenumber_platform_interface/yaw_phonenumber_platform_interface.dart';
 
-const YawPhonenumberPlatform instance = YawPhonenumberPlatform.instance;
+final YawPhonenumberPlatform instance = YawPhonenumberPlatform.instance;
 
 Future<String> formatIncomplete(String string) async {
   return await instance.formatIncomplete(string);

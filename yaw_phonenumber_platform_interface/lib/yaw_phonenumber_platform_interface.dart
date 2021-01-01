@@ -14,21 +14,21 @@ abstract class YawPhonenumberPlatform extends PlatformInterface {
     _instance = impl;
   }
 
-  static Future<String> formatIncomplete(String string) async {
+  Future<String> formatIncomplete(String string) async {
     throw UnimplementedError(
         'formatIncomplete unimplemented for this platform');
   }
 
-  static Future<String> formatAsInternational(String string) async {
+  Future<String> formatAsInternational(String string) async {
     throw UnimplementedError(
         'formatAsInternational unimplemented for this platform');
   }
 
-  static Future<bool> isValidNumber(String string) async {
+  Future<bool> isValidNumber(String string) async {
     throw UnimplementedError('isValidNumber unimplemented for this platform');
   }
 
-  static Future<bool> isInternationallyDialable(String string) async {
+  Future<bool> isInternationallyDialable(String string) async {
     throw UnimplementedError(
         'isInternationallyDialable unimplemented for this platform');
   }
