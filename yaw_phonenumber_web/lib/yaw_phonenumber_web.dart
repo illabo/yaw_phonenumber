@@ -1,46 +1,51 @@
 import 'dart:async';
-// In order to *not* need this ignore, consider extracting the "web" version
-// of your plugin as a separate package, instead of inlining it in the same
-// package as the core of your plugin.
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html show window;
-
-import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:yaw_phonenumber_platform_interface/yaw_phonenumber_platform_interface.dart';
+import 'package:yaw_phonenumber_web/src/libphonenumber_js_wrapper.dart';
+import 'package:yaw_phonenumber_web/src/likely_combinations.dart';
 
 /// A web implementation of the YawPhonenumberWeb plugin.
-class YawPhonenumberWeb {
+class YawPhonenumberWeb extends YawPhonenumberPlatform {
+  final _region = () {
+    final parts = html.window.navigator.languages.first
+            ?.replaceAll('_', '-')
+            ?.split("-") ??
+        [];
+    if (parts.length > 2 && LikelyCountry.isKnown(parts[2])) return parts[2];
+    if (parts.length == 2 && LikelyCountry.isKnown(parts[1])) return parts[1];
+    if (parts.isNotEmpty) return LikelyCountry.forCode(parts[0]);
+    return 'US';
+  }();
+
   static void registerWith(Registrar registrar) {
-    final MethodChannel channel = MethodChannel(
-      'yaw_phonenumber_web',
-      const StandardMethodCodec(),
-      registrar,
-    );
-
-    final pluginInstance = YawPhonenumberWeb();
-    channel.setMethodCallHandler(pluginInstance.handleMethodCall);
+    YawPhonenumberPlatform.instance = YawPhonenumberWeb();
   }
 
-  /// Handles method calls over the MethodChannel of this plugin.
-  /// Note: Check the "federated" architecture for a new way of doing this:
-  /// https://flutter.dev/go/federated-plugins
-  Future<dynamic> handleMethodCall(MethodCall call) async {
-    switch (call.method) {
-      case 'getPlatformVersion':
-        return getPlatformVersion();
-        break;
-      default:
-        throw PlatformException(
-          code: 'Unimplemented',
-          details:
-              'yaw_phonenumber_web for web doesn\'t implement \'${call.method}\'',
-        );
+  @override
+  Future<String> formatIncomplete(String string) async {
+    return formatIncompletePhoneNumber(string, _region);
+  }
+
+  @override
+  Future<String> formatAsInternational(String string) async {
+    final pn = parsePhoneNumber(string);
+    return pn.formatInternational();
+  }
+
+  @override
+  Future<bool> isValidNumber(String string) async {
+    final pn = parsePhoneNumber(string);
+    return pn.isValid();
+  }
+
+  @override
+  Future<bool> isInternationallyDialable(String string) async {
+    final pn = parsePhoneNumber(string);
+    try {
+      return pn.formatInternational().isNotEmpty;
+    } catch (_) {
+      return false;
     }
-  }
-
-  /// Returns a [String] containing the version of the platform.
-  Future<String> getPlatformVersion() {
-    final version = html.window.navigator.userAgent;
-    return Future.value(version);
   }
 }

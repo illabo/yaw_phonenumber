@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await YawPhonenumberWeb().getPlatformVersion(), '42');
+    expect(await YawPhonenumberWeb().isValidNumber('+7 914 324-31-78'), true);
   });
 }
