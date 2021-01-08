@@ -13,7 +13,7 @@ class YawPhonenumberWeb extends YawPhonenumberPlatform {
             ?.split("-") ??
         [];
     if (parts.length > 2 && LikelyCountry.isKnown(parts[2])) return parts[2];
-    if (parts.length == 2 && LikelyCountry.isKnown(parts[1])) return parts[1];
+    if (parts.length >= 2 && LikelyCountry.isKnown(parts[1])) return parts[1];
     if (parts.isNotEmpty) return LikelyCountry.forCode(parts[0]);
     return 'US';
   }();
@@ -24,26 +24,42 @@ class YawPhonenumberWeb extends YawPhonenumberPlatform {
 
   @override
   Future<String> formatIncomplete(String string) async {
-    return formatIncompletePhoneNumber(string, _region);
+    try {
+      return formatIncompletePhoneNumber(
+          string, string.startsWith('+') ? null : _region);
+    } catch (_) {
+      return string;
+    }
   }
 
   @override
   Future<String> formatAsInternational(String string) async {
-    final pn = parsePhoneNumber(string);
-    return pn.formatInternational();
+    try {
+      final pn =
+          parsePhoneNumber(string, string.startsWith('+') ? null : _region);
+      return pn.formatInternational();
+    } catch (_) {
+      return string;
+    }
   }
 
   @override
   Future<bool> isValidNumber(String string) async {
-    final pn = parsePhoneNumber(string);
-    return pn.isValid();
+    try {
+      final pn =
+          parsePhoneNumber(string, string.startsWith('+') ? null : _region);
+      return pn.isValid();
+    } catch (_) {
+      return false;
+    }
   }
 
   @override
   Future<bool> isInternationallyDialable(String string) async {
-    final pn = parsePhoneNumber(string);
     try {
-      return pn.formatInternational().isNotEmpty;
+      final pn = parsePhoneNumber(string, null);
+      final intl = pn.formatInternational();
+      return intl.isNotEmpty && (intl != string);
     } catch (_) {
       return false;
     }

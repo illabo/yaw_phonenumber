@@ -2,12 +2,12 @@ class LikelyCountry {
   static String forCode(String alpha) {
     switch (alpha.length) {
       case 2:
-        return _alpha2ToCountry[alpha];
+        return _alpha2ToCountry[alpha.toLowerCase()].toUpperCase();
         break;
       case 3:
-        final a2 = _alpha3ToAlpha2[alpha];
+        final a2 = _alpha3ToAlpha2[alpha.toLowerCase()];
         if (a2 == null) return null;
-        return _alpha2ToCountry[a2];
+        return _alpha2ToCountry[a2].toUpperCase();
         break;
       default:
         return null;
