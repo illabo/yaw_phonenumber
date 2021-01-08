@@ -59,7 +59,7 @@ class YawPhonenumberWeb extends YawPhonenumberPlatform {
     try {
       final pn = parsePhoneNumber(string, null);
       final intl = pn.formatInternational();
-      return intl.isNotEmpty && (intl != string);
+      return intl.isNotEmpty;
     } catch (_) {
       return false;
     }
