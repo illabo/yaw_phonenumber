@@ -1,5 +1,8 @@
 class LikelyCountry {
   static String forCode(String alpha) {
+    if (alpha == null || alpha.isEmpty) {
+      return null;
+    }
     switch (alpha.length) {
       case 2:
         return _alpha2ToCountry[alpha.toLowerCase()].toUpperCase();
@@ -16,7 +19,7 @@ class LikelyCountry {
 
   static bool isKnown(String alpha) {
     final code = forCode(alpha);
-    return (code != null && code != '');
+    return (code != null && code.isNotEmpty);
   }
 
   static final Map<String, String> _alpha2ToCountry = {

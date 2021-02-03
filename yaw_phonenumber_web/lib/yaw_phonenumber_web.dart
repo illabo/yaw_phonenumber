@@ -14,7 +14,8 @@ class YawPhonenumberWeb extends YawPhonenumberPlatform {
         [];
     if (parts.length > 2 && LikelyCountry.isKnown(parts[2])) return parts[2];
     if (parts.length >= 2 && LikelyCountry.isKnown(parts[1])) return parts[1];
-    if (parts.isNotEmpty) return LikelyCountry.forCode(parts[0]);
+    if (parts.isNotEmpty && parts[0] != null && parts[0].isNotEmpty)
+      return LikelyCountry.forCode(parts[0]);
     return 'US';
   }();
 
